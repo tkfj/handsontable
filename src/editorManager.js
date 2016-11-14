@@ -325,6 +325,17 @@ function EditorManager(instance, priv, selection) {
     } else {
       activeEditor = void 0;
     }
+
+    // prepare for ime input.
+    // https://github.com/ruzia/handsontable/commit/88ca0a373d61002390d91e155c66274f1ad2d3d3
+    if (activeEditor && activeEditor.textareaParentStyle) {
+      instance._registerTimeout(setTimeout(function() {
+        activeEditor.textareaParentStyle.top = '-9999px';
+        activeEditor.textareaParentStyle.left = '-9999px';
+        activeEditor.textareaParentStyle.display = 'block';
+        activeEditor.TEXTAREA.focus();
+      }, 0));
+    }
   };
 
   /**
